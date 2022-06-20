@@ -2,6 +2,10 @@
 const express = require("express");
 // Mongoose to communicate with MongoDB database
 const mongoose = require("mongoose");
+const { allowedNodeEnvironmentFlags } = require("process");
+
+// CORS
+const cors = require("cors");
 
 // DOTENV to hold port information and MongoDB URI
 require("dotenv").config();
@@ -17,7 +21,11 @@ mongoose.connect(MONGO_URI, {
 // define express server
 const app = express();
 // allows us to POST/PUT data on our server 
-app.use(express.urlencoded({extended: true}))
+app.use(express.urlencoded({ extended: true }))
+// set up body parser for JSON
+app.use(express.json());
+// use CORS
+app.use(cors());
 
 // HOME
 app.get("/", (req, res) => {
